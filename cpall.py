@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 #-*- coding: utf-8 -*-
 """
 用法:"python cpall.py dirFrom dirTo"
@@ -6,9 +6,11 @@
 为了避开Windows下拖放复制中的致使错误消息而编写(复制操作在遇到第一个不符合要求的文件时立即终止),并且
 可以用Python对更特殊的复制操作进行定制编程
 """
-import os,sys
+import os,sys,time
 maxfileload = 1000000
 blksize = 1024 * 500
+
+backupbasedir = r'/backup/web_update_bak' # 备份文件根目录
 
 def copyfile(pathFrom,pathTo,maxfileload=maxfileload):
     """
@@ -25,7 +27,7 @@ def copyfile(pathFrom,pathTo,maxfileload=maxfileload):
             if not bytesFrom: break                   #最后一个小块之后为空字符
             fileTo.write(bytesFrom)
 
-def copytree(dirFrom,dirTo,verbose=0):
+def copytree(dirFrom,dirTo,verbose=2):
     """
     将dirFrom下的内容复制到dirTo,返回(文件,目录)数目形式的元组
     为避免在某些平台上目录名不可解码,可能需要为其使用字节;
@@ -57,6 +59,37 @@ def copytree(dirFrom,dirTo,verbose=0):
                 print(sys.exc_info()[0],sys.exc_info()[1])
     return (fcount,dcount)
 
+def cpsamefile(dir1,dir2):
+    """
+    备份被覆盖的文件
+    """
+    # 在目录末尾添加目录分隔符
+    if not dir1.endswith(os.sep):
+        dir1 = dir1 + os.sep
+    if not dir2.endswith(os.sep):
+       dir2 = dir2 + os.sep
+
+    if not os.path.exists(backupbasedir):
+       os.makedirs(backupbasedir)
+    backupdir = backupbasedir + r'/' + time.strftime("%Y%m%d%H%M%S",time.localtime())
+    backupdir = os.path.normpath(backupdir)
+    backupdir = os.path.normcase(backupdir)
+    if not os.path.exists(backupdir):
+        os.mkdir(backupdir)
+    for item in os.walk(dir1):
+        for file0 in item[2]:
+            file1 = os.path.join(item[0],file0)
+            file2 = os.path.join(dir2,file1.replace(dir1,''))
+            file2 = os.path.normpath(file2)
+            file2 = os.path.normcase(file2)
+            file3 = os.path.join(backupdir,file2.replace(dir2,''))
+            file3 = os.path.normpath(file3)
+            file3 = os.path.normcase(file3)
+            if os.path.exists(file2):
+                if not os.path.exists(os.path.split(file3)[0]):
+                    os.makedirs(os.path.split(file3)[0])
+                copyfile(file2,file3)
+
 def getargs():
     """
     获取并验证文件目录名参数,碰到错误时默认返回None
@@ -87,6 +120,7 @@ if __name__ == '__main__':
     import time
     dirstuple = getargs()
     if dirstuple:
+        cpsamefile(*dirstuple)
         print('Copying...')
         start = time.clock()
         fcount,dcount = copytree(*dirstuple)
