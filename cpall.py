@@ -129,12 +129,12 @@ def getargs():
 
 if __name__ == '__main__':
     import time
-    dirstuple = getargs()
+    dirstuple = getargs()                         # 获取源和目标目录
     if dirstuple:
-        print('被操作的文件:')
+        print('被操作的文件:')                     # 显示被操作的文件
         for file in listfiles(*dirstuple):
             print(file)
-        if sys.version[0] == '3':
+        if sys.version[0] == '3':                 # 等待是否继续完成操作
             answer = input('输入y或n:')
         else:
             answer = raw_input('输入y或n:')
