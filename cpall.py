@@ -90,6 +90,17 @@ def cpsamefile(dir1,dir2):
                     os.makedirs(os.path.split(file3)[0])
                 copyfile(file2,file3)
 
+def listfiles(dir1,dir2):
+    """
+    显示要操作的文件
+    """
+    files = []    # 文件列表
+    for (thisDir,subsHere,filesHere) in os.walk(dir1):
+        for file in filesHere:
+            files.append(os.path.join(thisDir,file))
+
+    return files
+
 def getargs():
     """
     获取并验证文件目录名参数,碰到错误时默认返回None
@@ -120,6 +131,15 @@ if __name__ == '__main__':
     import time
     dirstuple = getargs()
     if dirstuple:
+        print('被操作的文件:')
+        for file in listfiles(*dirstuple):
+            print(file)
+        if sys.version[0] == '3':
+            answer = input('输入y或n:')
+        else:
+            answer = raw_input('输入y或n:')
+        if answer != 'y':
+            sys.exit()
         cpsamefile(*dirstuple)
         print('Copying...')
         start = time.clock()
