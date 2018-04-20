@@ -25,7 +25,7 @@ def run(qdNum):                       # 加密函数
     elif sysName == 'iPhone':
         os.system(shellScriptIp + ' ' + qdNum)
     else:
-        print('%s 渠道目录不规范,未执行加密',qdNum)
+        print(('%s 渠道目录不规范,未执行加密') % qdNum)
 
 if len(sys.argv) > 1:
     qdNums = sys.argv[1:]         # 要加密的渠道
@@ -38,7 +38,7 @@ for qdNum in qdNums:
     p = Process(target=run,args=(qdNum,))
     p.start()
     processes.append(p)
-    time.sleep(1)
+    time.sleep(2)
 
 for p in processes:
     p.join()
