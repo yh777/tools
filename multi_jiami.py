@@ -24,6 +24,8 @@ def run(qdNum):                       # 加密函数
         os.system(shellScriptAn + ' ' + qdNum)
     elif sysName == 'iPhone':
         os.system(shellScriptIp + ' ' + qdNum)
+    else:
+        print('%s 渠道目录不规范,未执行加密',qdNum)
 
 if len(sys.argv) > 1:
     qdNums = sys.argv[1:]         # 要加密的渠道
