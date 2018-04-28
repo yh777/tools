@@ -2,7 +2,7 @@
 一个简单的文本或文件查看器组件
 """
 
-print('PP4E scrolledtext')
+print('scrolledtext')
 from tkinter import *
 
 class ScrolledText(Frame):
