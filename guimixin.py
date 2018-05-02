@@ -11,8 +11,8 @@
 from tkinter import *
 from tkinter.messagebox import *
 from tkinter.filedialog import *
-from scrolledtext import ScrolledText              # 也可用tkinter.scrolledtext
-from launchmodes import PortableLauncher,System    # 也可以使用多重处理
+from tools.scrolledtext import ScrolledText              # 也可用tkinter.scrolledtext
+from tools.launchmodes import PortableLauncher,System    # 也可以使用多重处理
 
 class GuiMixin:
     def infobox(self,title,text,*args):            # 使用标准对话框

@@ -23,7 +23,7 @@ class ScrolledText(Frame):
 
     def settext(self,text='',file=None):
         if file:
-            text = open(file,'r').read()
+            text = open(file,'r',encoding='utf-8').read()
         self.text.delete('1.0',END)                      # 删除相当文本
         self.text.insert('1.0',text)                     # 在第一行的第一列添加
         self.text.mark_set(INSERT,'1.0')                 # 设置插入的光标位置

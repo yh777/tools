@@ -151,7 +151,8 @@ if __name__ == '__main__':
             self.toolBar = toolBar
 
     root = Tk()
-    TestAppFrameMenu(Toplevel())
-    TestAppWindowMenu(Toplevel())
-    TestAppWindowMenuBasic(Toplevel())
+    TestAppFrameMenu(parent=Toplevel())
+    TestAppWindowMenu(parent=Toplevel())
+    TestAppWindowMenuBasic(parent=Toplevel())
+    root.resizable(width=False,height=False)
     root.mainloop()
