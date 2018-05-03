@@ -1,8 +1,10 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
 """
 一个简单的文本或文件查看器组件
 """
 
-print('scrolledtext')
+#print('scrolledtext')
 from tkinter import *
 
 class ScrolledText(Frame):
