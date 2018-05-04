@@ -10,7 +10,7 @@ from windows import MainWindow, PopupWindow, ComponentWindow
 
 def _selftest():
 
-    # mixin usage
+    # 混合使用
     class content:
         "same code used as a Tk, Toplevel, and Frame"
         def __init__(self):
@@ -30,12 +30,12 @@ def _selftest():
     prev = contentmix()
 
     class contentmix(ComponentWindow, content):
-        def __init__(self):                               # nested frame
-            ComponentWindow.__init__(self, prev)          # on prior window
-            content.__init__(self)                        # Sing erases frame
+        def __init__(self):                               # 嵌套框架
+            ComponentWindow.__init__(self, prev)          # 在前一个Sing窗口
+            content.__init__(self)                        # 擦除了框架
     contentmix()
 
-    # subclass usage
+    # 使用子类
     class contentsub(PopupWindow):
         def __init__(self):
             PopupWindow.__init__(self, 'popup', 'subclass')
@@ -43,7 +43,7 @@ def _selftest():
             Button(self, text='Sing', command=self.destroy).pack()
     contentsub()
 
-    # non-class usage
+    # 不使用类
     win = PopupWindow('popup', 'attachment')
     Button(win, text='Redwood', command=win.quit).pack()
     Button(win, text='Sing   ', command=win.destroy).pack()
